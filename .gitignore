@@ -6,6 +6,10 @@ __pycache__/
 # Generated test images
 *.png
 !test_image.png
+!standard_peppers.png
+!standard_baboon.png
+!standard_airplane.png
+!standard_lenna.png
 
 # ML model
 *.pkl
