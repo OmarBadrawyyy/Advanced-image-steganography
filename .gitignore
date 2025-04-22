@@ -5,7 +5,8 @@ __pycache__/
 
 # Generated test images
 *.png
-!standard_lenna.png
+!test_image.png
+
 
 # ML model
 *.pkl
