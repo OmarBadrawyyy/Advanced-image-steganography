@@ -1,78 +1,70 @@
-# Project Structure
+# Image Steganography Project Structure
 
-## Core Files
+## Architecture Overview
 
-- **steganography.py**: Contains all steganography-related functionality
-  - LSB (Least Significant Bit) encoding/decoding
-  - DCT (Discrete Cosine Transform) encoding/decoding
-  - Steganalysis for detection of hidden data
-  - Image capacity calculation
-  - Integrity verification with HMAC
+This project demonstrates a comprehensive implementation of steganography techniques with a focus on security best practices, cryptography integration, and ML-based steganalysis.
 
-- **encryption.py**: Handles cryptographic operations
-  - Fernet symmetric encryption/decryption
-  - Key generation
-  - Secure message handling
+## Core Components
 
-- **main.py**: Command-line interface and program entry point
-  - Argument parsing
-  - Command handling (encode, decode, analyze, capacity)
-  - User interaction
-  - Error handling
+- `main.py` - Command-line interface with argparse implementation for all steganographic operations
+- `steganography.py` - Algorithmic implementation of LSB/DCT steganography and ML-based steganalysis
+- `encryption.py` - Cryptographic operations using Fernet symmetric encryption
+- `test_image.png` - Sample image for testing and demonstration
 
-## Dependencies
+## Technical Implementation
 
-Required libraries (see requirements.txt):
-- **pillow**: Image processing
-- **numpy**: Numerical operations
-- **opencv-python**: Advanced image processing (for DCT method)
-- **scipy**: Scientific computing (for DCT transformations)
-- **cryptography**: Encryption and key management
+### Steganography Algorithms
+- **LSB (Least Significant Bit)** - Bit manipulation technique that modifies the least significant bit of RGB pixel values
+- **DCT (Discrete Cosine Transform)** - Frequency domain technique that embeds data in mid-frequency DCT coefficients
 
-## Steganography Methods
+### Security Implementation
+- Fernet symmetric encryption for message confidentiality
+- SHA-256 HMAC for message integrity verification
+- Seeded pseudorandom bit distribution for enhanced statistical security
+- Combined cryptographic and steganographic security layers
 
-### LSB (Least Significant Bit)
-- **Approach**: Modifies the least significant bits of pixel values
-- **Files**: `encode_lsb()` and `decode_lsb()` in steganography.py
-- **Advantages**: Higher capacity, simpler implementation
-- **Limitations**: More vulnerable to image processing, statistical analysis
+### Encryption Key Management
+- Cryptographically secure key generation using Fernet
+- Runtime key presentation with deliberate non-persistence for security
+- Command-line interface for key input during decoding
+- Secure error handling to prevent cryptographic leaks
 
-### DCT (Discrete Cosine Transform)
-- **Approach**: Embeds data in frequency domain coefficients
-- **Files**: `encode_dct()` and `decode_dct()` in steganography.py
-- **Advantages**: Better resistance to image processing and compression
-- **Limitations**: Lower capacity, more complex implementation
+### Steganalysis Engine
+- Statistical analysis using chi-square and histogram evaluation
+- Machine Learning detection pipeline:
+  - Feature extraction from spatial and frequency domains
+  - Random Forest classification model
+  - Training workflow with clean/stego image comparison
 
-## Security Features
+## CLI Architecture
 
-### Encryption
-- **Implementation**: Fernet symmetric encryption from cryptography library
-- **Files**: Functions in encryption.py
-- **Purpose**: Ensures data can't be read even if steganography is detected
+```
+python main.py <command> [options]
+```
 
-### Integrity Verification
-- **Implementation**: HMAC with SHA-256
-- **Files**: `generate_hmac()` and `verify_hmac()` in steganography.py
-- **Purpose**: Detects message tampering
+Command architecture follows a consistent pattern:
+- `encode` - Data hiding operation with multiple security options
+- `decode` - Data extraction with integrity verification
+- `analyze` - Statistical steganalysis for detection
+- `capacity` - Mathematical analysis of potential data capacity
+- `train-model` - ML model training with configurable parameters
+- `ml-analyze` - Advanced detection using trained ML models
 
-### Randomized Encoding
-- **Implementation**: Password-based pseudorandom pixel selection
-- **Files**: Embedding logic in `encode_lsb()` and `decode_lsb()`
-- **Purpose**: Makes statistical analysis more difficult
+## Machine Learning Pipeline
 
-## Detection Capabilities
+The steganalysis system employs the following feature engineering approach:
+- Statistical features: mean, standard deviation, skewness, kurtosis
+- Information theory metrics: entropy calculations, bit distribution
+- Image processing features: pixel differences, neighborhood statistics
+- Transform domain features: DCT coefficient statistics
+- Histogram analysis: bin distribution and variance metrics
 
-### Steganalysis
-- **Implementation**: Statistical analysis of LSB distribution
-- **Files**: `detect_steganography()` in steganography.py
-- **Purpose**: Demonstrates how steganography can be detected
+## Technical Requirements
 
-## Command-line Interface
-
-The application supports four main commands:
-- **encode**: Hide a message in an image
-- **decode**: Extract a hidden message from an image
-- **analyze**: Check if an image likely contains hidden data
-- **capacity**: Calculate how much data can be hidden in an image
-
-Each command supports various arguments and options for customization. 
+- scikit-learn (ML pipeline)
+- numpy (numerical operations)
+- opencv-python (image processing)
+- scipy (DCT transforms)
+- Pillow (image manipulation)
+- joblib (model serialization)
+- cryptography (secure encryption) 

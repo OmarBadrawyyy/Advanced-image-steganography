@@ -1,0 +1,15 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Generated test images
+*.png
+!test_image.png
+
+# ML model
+*.pkl
+
+# IDE files
+.vscode/
+.idea/
